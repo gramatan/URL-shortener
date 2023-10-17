@@ -1,4 +1,4 @@
-"""Readiness and liveness check endpoints."""
+"""Simple readiness and liveness check endpoints."""
 from fastapi import APIRouter
 from starlette import status
 

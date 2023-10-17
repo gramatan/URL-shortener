@@ -1,3 +1,5 @@
-# Сокращатель ссылок.
+# URL shortener.
 
-Сервис позволяет сокращать ссылки.
+Service for URL shortening.
+
+Python, Poetry, Fastapi, Sqlalchemy, Postgresql, Docker, K8s.
