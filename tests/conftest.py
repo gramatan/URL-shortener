@@ -1,3 +1,4 @@
+"""Conftest for all tests."""
 import asyncio
 
 import pytest

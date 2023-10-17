@@ -1,3 +1,4 @@
+"""Tests for readiness endpoints."""
 import pytest
 import pytest_asyncio
 from fastapi.testclient import TestClient
@@ -8,6 +9,7 @@ from main_short import app
 
 @pytest.mark.asyncio
 class TestApi:
+    """Class for testing API."""
 
     @pytest_asyncio.fixture(scope='module')
     async def test_client(self):
