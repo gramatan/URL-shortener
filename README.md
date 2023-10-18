@@ -13,7 +13,13 @@ docker run -d -p 24501:24501 --name url_shortener gran_url
 
 ## Steps for deploying in kubernetes
 
-From the [gran-url](gran-url) folder:
+Create package and install:
 ```shell
-helm install gran-url ./gran-url/gran-url-0.1.0.tgz
+helm package gran-url/.
+helm install gran-url gran-url-0.1.0.tgz
+```
+
+For port-forward(after start) do:
+```shell
+kubectl port-forward svc/gran-url 24501:24501
 ```
