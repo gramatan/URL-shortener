@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.config.appName | quote }}
+data:
+  APP_PORT: {{ .Values.config.appPort | quote }}
+  HEALTHZ_PREFIX: {{ .Values.config.healthzPrefix | quote }}

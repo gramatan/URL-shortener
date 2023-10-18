@@ -1,3 +1,10 @@
+## [0.1.1] - 17.10.2023
+### Added
+- Added Dockerfile.
+- Added helm chart.
+### Modified
+- Text files updated.
+
 ## [0.1.0] - 17.10.2023
 ### Added
 - Added Poetry for dependency management.

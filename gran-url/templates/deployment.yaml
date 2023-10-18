@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.config.appName | quote }}
+  labels:
+    app: {{ .Values.config.appName | quote }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.config.appName | quote }}
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: {{ .Values.config.appPort | quote }}
+      labels:
+        app: {{ .Values.config.appName | quote }}
+    spec:
+      containers:
+        - name: gran-cc-auth
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: {{ .Values.config.appPort }}
+          livenessProbe:
+            httpGet:
+              path: /up
+              port: {{ .Values.config.appPort }}
+            initialDelaySeconds: 20
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: {{ .Values.config.appPort }}
+            initialDelaySeconds: 20
+            periodSeconds: 5
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.config.appName | quote }}
