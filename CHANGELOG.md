@@ -1,3 +1,10 @@
+## [0.1.2] - 19.10.2023
+### Added
+- Added middlewares with prometheus metrics and jaeger tracing
+### Modified
+- Tests updated.
+- Text files updated.
+
 ## [0.1.1] - 17.10.2023
 ### Added
 - Added Dockerfile.

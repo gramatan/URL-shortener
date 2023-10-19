@@ -36,34 +36,10 @@ docker run -d -p 24501:24501 --name url_shortener gran_url
 
 ## Шаги для разворачивания в кубернетис
 
-1. Примените конфигурации для хранилища данных:
-  ```
-   kubectl apply -f k8s/volume.yaml
-  ```
-
-2. Добавьте секреты и константы:
-  ```
-  kubectl apply -f k8s/secret.yaml
-  kubectl apply -f k8s/configmap.yaml
-  ```
-
-3. Деплоим сервисы:
-  ```
-  kubectl apply -f k8s/deployment_cc_auth.yaml
-  kubectl apply -f k8s/deployment_cc_balance.yaml
-  kubectl apply -f k8s/deployment_cc_verify.yaml
-  ```
-
-4. Деплоим сервисы:
-  ```
-  kubectl apply -f k8s/service_cc_auth.yaml
-  kubectl apply -f k8s/service_cc_balance.yaml
-  ```
-
-5. Джобом накатываем миграции(но так как у нас нет доступа к джобам - мы сделаем это с помощью одноразового пода.):
-  ```
-  kubectl apply -f k8s/job_alembic.yaml
-  ```
+```shell
+docker build -t gran_url .
+docker run -d -p 24501:24501 --name url_shortener gran_url
+```
 
   Проверка статуса:
   ```

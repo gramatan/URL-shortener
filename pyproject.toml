@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "shortener"
-version = "0.1.1"
+version = "0.1.2"
 description = "URL Shortener for SHIFT course."
 authors = ["Andrey <megagran.work@gmail.com>"]
 readme = "README.md"
@@ -11,6 +11,10 @@ fastapi = "^0.103.2"
 uvicorn = "^0.23.2"
 pydantic-settings = "^2.0.3"
 httpx = "^0.25.0"
+opentracing = "^2.4.0"
+prometheus-client = "^0.17.1"
+aiohttp = "^3.8.6"
+jaeger-client = "^4.8.0"
 
 
 [tool.poetry.dev-dependencies]

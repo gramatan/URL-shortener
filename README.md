@@ -16,7 +16,7 @@ docker run -d -p 24501:24501 --name url_shortener gran_url
 Create package and install:
 ```shell
 helm package gran-url/.
-helm install gran-url gran-url-0.1.0.tgz
+helm install gran-url gran-url-0.1.1.tgz
 ```
 
 For port-forward(after start) do:
