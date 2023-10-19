@@ -1,6 +1,5 @@
 """Tests for shortener endpoints."""
 import pytest
-import pytest_asyncio
 from fastapi.testclient import TestClient
 
 from main_short import app
@@ -10,44 +9,52 @@ from main_short import app
 class TestApi:
     """Class for testing API."""
 
-    @pytest_asyncio.fixture(scope='module')
-    async def test_client(self):
+    @pytest.fixture(scope='class')
+    def test_client(self):
         """
         Fixture for creating a client for testing.
 
         Yields:
-            TestClient: Test client.
+            Test client.
         """
         yield TestClient(app)
 
-    async def test_get_short(
-        self,
-        test_client,
-    ):
+    @pytest.mark.parametrize(
+        'long_url, expected_status',
+        [
+            pytest.param('https://example.com', 200, id='Valid URL'),
+            pytest.param('example.com', 200, id='No schema, still valid'),
+            pytest.param('not_a_url', 400, id='Invalid URL'),
+            pytest.param(' ', 400, id='Just a space'),
+        ],
+    )
+    async def test_get_short(self, test_client, long_url, expected_status):
         """
-        Test for /healthz/up endpoint.
+        Test for /api/short endpoint.
 
         Args:
             test_client (TestClient): Client for testing.
+            long_url: Long url to be shortened.
+            expected_status: Expected status.
         """
-        add_data = {
-            'long_url': 'https://example.com',
-        }
-        response = test_client.post(url='/api/short', params=add_data)
-        assert response.status_code == 200
+        response = test_client.post(url=f'/api/short?long_url={long_url}')
+        assert response.status_code == expected_status
 
-    async def test_get_long(
-        self,
-        test_client,
-    ):
+    @pytest.mark.parametrize(
+        'short_url, expected_status',
+        [
+            pytest.param('99999', 404, id='URL not found'),
+            pytest.param('notAnIndex', 404, id='Not a valid index'),
+        ],
+    )
+    async def test_get_long(self, test_client, short_url, expected_status):
         """
-        Test for /healthz/ready endpoint.
+        Test for /api/go endpoint.
 
         Args:
             test_client (TestClient): Client for testing.
+            short_url: Short url to be decoded.
+            expected_status: Expected status.
         """
-        add_data = {
-            'short_url': 'someShortCode',
-        }
-        response = test_client.get(url='/api/go', params=add_data)
-        assert response.status_code == 200
+        response = test_client.get(url=f'/api/go?short_url={short_url}')
+        assert response.status_code == expected_status

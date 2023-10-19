@@ -8,7 +8,7 @@ image:
   repository: "registry.gitlab.com/shift-python/y2023/homeworks/gramatchikov-a/gran_url_shortener"
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "3"
+  tag: "4"
 
 imagePullSecrets: []
 nameOverride: ""

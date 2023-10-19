@@ -1,4 +1,5 @@
 """Services for URL Shortener."""
+import validators
 
 
 class ShortenerService:
@@ -26,6 +27,12 @@ class ShortenerService:
         Returns:
             str: short url
         """
+        if not validators.url(long_url):
+            if not validators.url(f'http://{long_url}'):  # noqa: WPS504
+                return None
+            else:
+                long_url = f'http://{long_url}'
+
         self.url_storage.append(long_url)
         return str(len(self.url_storage) - 1)
 
@@ -43,8 +50,7 @@ class ShortenerService:
             str: long url.
         """
         try:
-            index = int(short_url)
+            if 0 <= int(short_url) < len(self.url_storage):
+                return self.url_storage[int(short_url)]
         except Exception:
             return None
-
-        return self.url_storage[index]

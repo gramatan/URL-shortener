@@ -1,32 +1,35 @@
-## [0.1.3] - 19.10.2023
+## [0.1.6] - 19.10.2023
+### Added
+- Added URL validity check.
+- Now we have redirection on '/go' endpoint.
+### Modified
+- Tests updated.
+- Versions in helm charts and poetry changed.
+
+## [0.1.5] - 19.10.2023
 ### Added
 - Added logic for storing urls.
-- New tag for image stored on gitlab.
 ### Modified
 - Tests updated.
-- Text files updated.
-- versions in helm charts changed.
+- Versions in helm charts changed.
+
+## [0.1.4] - 19.10.2023
+### Added
+- Initial endpoints for short and long urls.
+### Modified
+- Tests updated.
 
 ## [0.1.3] - 19.10.2023
 ### Added
 - Initial endpoints for short and long urls.
 ### Modified
 - Tests updated.
-- Text files updated.
-
-## [0.1.3] - 19.10.2023
-### Added
-- Initial endpoints for short and long urls.
-### Modified
-- Tests updated.
-- Text files updated.
 
 ## [0.1.2] - 19.10.2023
 ### Added
 - Added middlewares with prometheus metrics and jaeger tracing
 ### Modified
 - Tests updated.
-- Text files updated.
 
 ## [0.1.1] - 17.10.2023
 ### Added
