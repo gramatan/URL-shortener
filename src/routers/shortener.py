@@ -1,6 +1,9 @@
 """URL Shortener endpoints."""
 from fastapi import APIRouter
 
+from src.database.db import global_storage
+from src.services.shortener import ShortenerService
+
 router = APIRouter()
 
 
@@ -17,7 +20,8 @@ async def get_short_url(
     Returns:
         str: short URL.
     """
-    return long_url
+    response = ShortenerService(url_storage=global_storage)
+    return await response.get_short(long_url=long_url)
 
 
 @router.get('/go')
@@ -33,4 +37,5 @@ async def get_long_url(
     Returns:
         str: Long url.
     """
-    return short_url
+    response = ShortenerService(url_storage=global_storage)
+    return await response.get_long(short_url=str(short_url))
