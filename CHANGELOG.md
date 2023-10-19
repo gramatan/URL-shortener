@@ -1,3 +1,10 @@
+## [0.1.3] - 19.10.2023
+### Added
+- Initial endpoints for short and long urls.
+### Modified
+- Tests updated.
+- Text files updated.
+
 ## [0.1.2] - 19.10.2023
 ### Added
 - Added middlewares with prometheus metrics and jaeger tracing

@@ -11,7 +11,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 from config.config import APP_PORT, HEALTHZ_PREFIX, JAEGER_HOST
 from src.middlewares import metrics_middleware, tracing_middleware
-from src.routers import readiness
+from src.routers import readiness, shortener
 
 
 class Settings(BaseSettings):
@@ -56,7 +56,8 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI()
 
-app.include_router(readiness.router, prefix=HEALTHZ_PREFIX, tags=['shortener'])
+app.include_router(readiness.router, prefix=HEALTHZ_PREFIX, tags=['readiness'])
+app.include_router(shortener.router, prefix='/api', tags=['shortener'])
 
 metrics_app = make_asgi_app()
 app.mount('/metrics', metrics_app)

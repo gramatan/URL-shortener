@@ -1,9 +1,8 @@
-"""Tests for readiness endpoints."""
+"""Tests for shortener endpoints."""
 import pytest
 import pytest_asyncio
 from fastapi.testclient import TestClient
 
-from config.config import HEALTHZ_PREFIX
 from main_short import app
 
 
@@ -21,7 +20,7 @@ class TestApi:
         """
         yield TestClient(app)
 
-    async def test_get_up(
+    async def test_get_short(
         self,
         test_client,
     ):
@@ -31,10 +30,13 @@ class TestApi:
         Args:
             test_client (TestClient): Client for testing.
         """
-        response = test_client.get(url=f'{HEALTHZ_PREFIX}/up')
+        add_data = {
+            'long_url': 'https://example.com',
+        }
+        response = test_client.post(url='/api/short', params=add_data)
         assert response.status_code == 200
 
-    async def test_get_ready(
+    async def test_get_long(
         self,
         test_client,
     ):
@@ -44,5 +46,8 @@ class TestApi:
         Args:
             test_client (TestClient): Client for testing.
         """
-        response = test_client.get(url=f'{HEALTHZ_PREFIX}/ready')
+        add_data = {
+            'short_url': 'someShortCode',
+        }
+        response = test_client.get(url='/api/go', params=add_data)
         assert response.status_code == 200
