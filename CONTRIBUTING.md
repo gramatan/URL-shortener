@@ -58,10 +58,9 @@ docker run -d -p 24501:24501 --name url_shortener gran_url
 
 - `src` : Исходный код проекта.
   - [database](src%2Fdatabase) : Файлы для работы с базой данных.
-  - [repositories](credit_card_auth%2Fsrc%2Frepositories) : Файлы с репозиториями для работы с базой данных.
-  - [routers](credit_card_auth%2Fsrc%2Frouters) : Файлы с описанием эндпоинтов.
-  - [schemas](credit_card_auth%2Fsrc%2Fschemas) : Схемы данных.
-  - [services](credit_card_auth%2Fsrc%2Fservices) : Файлы с сервисами для работы с приложением.
+  - [repositories](src%2Frepositories) : Файлы с репозиториями для работы с базой данных.
+  - [routers](src%2Frouters) : Файлы с описанием эндпоинтов.
+  - [services](src%2Fservices) : Файлы с сервисами для работы с приложением.
 
 - `tests`: Тесты сервиса.
   - `unit`: Юнит тесты разбиты по файлам в соответствии со структурой проекта.

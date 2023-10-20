@@ -6,3 +6,4 @@ data:
   APP_PORT: {{ .Values.config.appPort | quote }}
   HEALTHZ_PREFIX: {{ .Values.config.healthzPrefix | quote }}
   JAEGER_HOST: {{ .Values.config.jaegerHost | quote }}
+  SHORT_URL_LENGTH: {{ .Values.config.shortUrlLength | quote }}

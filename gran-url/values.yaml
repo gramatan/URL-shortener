@@ -8,7 +8,7 @@ image:
   repository: "registry.gitlab.com/shift-python/y2023/homeworks/gramatchikov-a/gran_url_shortener"
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "4"
+  tag: "0.1.7"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -98,3 +98,4 @@ config:
   appPort: "24501"
   healthzPrefix: "/healthz"
   jaegerHost: "jaeger-agent.monitoring.svc.cluster.local"
+  shortUrlLength: "6"

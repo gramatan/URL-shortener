@@ -1,6 +1,9 @@
 """Services for URL Shortener."""
 import validators
 
+from config.config import SHORT_URL_LENGTH, URL_CHARS
+from src.repositories.short_repo import URLRepository
+
 
 class ShortenerService:
     """Service for URL Shortener."""
@@ -13,6 +16,7 @@ class ShortenerService:
             url_storage: memory storage.
         """
         self.url_storage = url_storage
+        self.short_repo = URLRepository(url_storage=url_storage)
 
     async def get_short(
         self,
@@ -33,8 +37,8 @@ class ShortenerService:
             else:
                 long_url = f'http://{long_url}'
 
-        self.url_storage.append(long_url)
-        return str(len(self.url_storage) - 1)
+        short_url = await self.short_repo.store(long_url=long_url)
+        return short_url.rjust(SHORT_URL_LENGTH, URL_CHARS[0])
 
     async def get_long(
         self,
@@ -49,8 +53,7 @@ class ShortenerService:
         Returns:
             str: long url.
         """
-        try:
-            if 0 <= int(short_url) < len(self.url_storage):
-                return self.url_storage[int(short_url)]
-        except Exception:
-            return None
+        for char in short_url:
+            if char not in URL_CHARS:
+                return None
+        return await self.short_repo.retrieve(short_url=short_url)
