@@ -1,51 +1,30 @@
 """Repo for shortener."""
-from config.config import URL_CHARS
+import secrets
+
+from fastapi import Depends
+from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from config.config import SHORT_URL_LENGTH
+from config.postgres_adaptor import get_db_session
+from src.database.base import UserAlchemyModel
 
 
 class URLRepository:
     """Repo for shortener."""
 
-    def __init__(self, url_storage: list):
+    def __init__(
+        self,
+        session: AsyncSession = Depends(get_db_session),
+    ):
         """
         Repo for shortener.
 
         Args:
-            url_storage: storage for urls.
+            session: session for db.
         """
-        self.url_storage = url_storage
-        self.allowed_chars = URL_CHARS
-        self.base = len(self.allowed_chars)
-
-    def encode(self, index: int) -> str:
-        """
-        Encode index to short url.
-
-        Args:
-            index: URL index in storage.
-
-        Returns:
-            str: short url.
-        """
-        chars = []
-        while index:
-            chars.append(self.allowed_chars[index % self.base])
-            index //= self.base
-        return ''.join(reversed(chars)) or self.allowed_chars[0]
-
-    def decode(self, short_url: str) -> int:
-        """
-        Decode short url to index.
-
-        Args:
-            short_url: short url.
-
-        Returns:
-            int: index in storage.
-        """
-        index = 0
-        for char in short_url:
-            index = index * self.base + self.allowed_chars.index(char)
-        return index
+        self.session = session
 
     async def store(self, long_url: str) -> str:
         """
@@ -57,11 +36,25 @@ class URLRepository:
         Returns:
             str: short url.
         """
-        if long_url in self.url_storage:
-            return self.encode(self.url_storage.index(long_url))
+        existing_url = await self.session.execute(
+            select(UserAlchemyModel).filter_by(saved_url=long_url),
+        )
+        record = existing_url.scalar_one_or_none()
 
-        self.url_storage.append(long_url)
-        return self.encode(len(self.url_storage) - 1)
+        if record:
+            return record.token  # type: ignore
+
+        token = await self._generate_token()
+        new_url = UserAlchemyModel(token=token, saved_url=long_url)
+        self.session.add(new_url)
+
+        try:
+            await self.session.commit()
+        except IntegrityError:
+            await self.session.rollback()
+            return await self.store(long_url)
+
+        return token
 
     async def retrieve(self, short_url: str) -> str | None:
         """
@@ -73,7 +66,27 @@ class URLRepository:
         Returns:
             str | None: long url or nothing.
         """
-        index = self.decode(short_url)
-        if 0 <= index < len(self.url_storage):
-            return self.url_storage[index]
+        is_existed = await self.session.execute(
+            select(UserAlchemyModel).filter_by(token=short_url),
+        )
+        record = is_existed.scalar_one_or_none()
+
+        if record:
+            return record.saved_url
+
         return None
+
+    async def _generate_token(self) -> str:
+        """
+        Generate a unique token.
+
+        Returns:
+            str: token.
+        """
+        while True:
+            token = secrets.token_urlsafe(SHORT_URL_LENGTH)
+            existing_token = await self.session.execute(
+                select(UserAlchemyModel).filter_by(token=token),
+            )
+            if not existing_token.scalar_one_or_none():
+                return token

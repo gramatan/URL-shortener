@@ -1,3 +1,9 @@
+## [0.1.8] - 20.10.2023
+### Added
+- Now we work with postgres.
+### Modified
+-
+
 ## [0.1.7] - 20.10.2023
 ### Added
 - Added repository layer with short url decoding and encoding methods.

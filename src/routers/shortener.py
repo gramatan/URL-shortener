@@ -1,5 +1,5 @@
 """URL Shortener endpoints."""
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import RedirectResponse
 from starlette.status import (
     HTTP_307_TEMPORARY_REDIRECT,
@@ -7,7 +7,6 @@ from starlette.status import (
     HTTP_404_NOT_FOUND,
 )
 
-from src.database.db import global_storage
 from src.services.shortener import ShortenerService
 
 router = APIRouter()
@@ -16,12 +15,14 @@ router = APIRouter()
 @router.post('/short')
 async def get_short_url(
     long_url: str,
+    response: ShortenerService = Depends(),
 ):
     """
     Endpoint for creating short URL.
 
     Args:
         long_url: URL to be packed.
+        response: Shortener service.
 
     Returns:
         str: short URL.
@@ -29,7 +30,6 @@ async def get_short_url(
     Raises:
         HTTPException: If not URL was given.
     """
-    response = ShortenerService(url_storage=global_storage)
     short_url = await response.get_short(long_url=long_url)
 
     if short_url is None:
@@ -44,12 +44,14 @@ async def get_short_url(
 @router.get('/go')
 async def get_long_url(
     short_url: str,
+    response: ShortenerService = Depends(),
 ):
     """
     Endpoint for getting long URL.
 
     Args:
         short_url: URL to be decoded.
+        response: ShortenerService.
 
     Returns:
         str: Long url.
@@ -57,8 +59,7 @@ async def get_long_url(
     Raises:
         HTTPException: If short url not found.
     """
-    service = ShortenerService(url_storage=global_storage)
-    long_url = await service.get_long(short_url=short_url)
+    long_url = await response.get_long(short_url=short_url)
 
     if long_url:
         return RedirectResponse(
