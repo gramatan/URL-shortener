@@ -1,8 +1,11 @@
 ## [0.1.8] - 20.10.2023
 ### Added
 - Now we work with postgres.
+- Model for the database.
 ### Modified
--
+- Update tests.
+- Add postgres to the Helm release.
+- Change logic in repo layer.
 
 ## [0.1.7] - 20.10.2023
 ### Added

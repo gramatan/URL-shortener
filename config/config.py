@@ -10,7 +10,7 @@ JAEGER_HOST = os.environ.get('JAEGER_HOST', 'localhost')
 
 SHORT_URL_LENGTH = int(os.environ.get('SHORT_URL_LENGTH', 8))
 
-POSTGRES_HOST = os.environ.get('POSTGRES_HOST', 'postgres')
+POSTGRES_HOST = os.environ.get('POSTGRES_HOST', 'localhost')
 POSTGRES_PORT = os.environ.get('POSTGRES_PORT', '5432')
 
 POSTGRES_DB_USER = os.environ.get('POSTGRES_DB_USER', 'gran_url')

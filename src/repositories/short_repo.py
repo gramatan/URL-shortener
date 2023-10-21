@@ -84,7 +84,7 @@ class URLRepository:
             str: token.
         """
         while True:
-            token = secrets.token_urlsafe(SHORT_URL_LENGTH)
+            token = secrets.token_urlsafe(SHORT_URL_LENGTH)[:SHORT_URL_LENGTH]
             existing_token = await self.session.execute(
                 select(UserAlchemyModel).filter_by(token=token),
             )

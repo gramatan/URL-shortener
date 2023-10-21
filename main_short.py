@@ -47,14 +47,14 @@ async def lifespan(app: FastAPI):
             },
             'logging': True,
         },
-        service_name='gran_auth',
+        service_name='gran_url',
         validate=True,
     )
     tracer = config.initialize_tracer()
     yield {'client_session': session, 'jaeger_tracer': tracer}
     await session.close()
 
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 
 app.include_router(readiness.router, prefix=HEALTHZ_PREFIX, tags=['readiness'])
 app.include_router(shortener.router, prefix='/api', tags=['shortener'])

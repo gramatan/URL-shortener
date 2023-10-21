@@ -1,5 +1,6 @@
 """Services for URL Shortener."""
 import validators
+from fastapi import Depends
 
 from src.repositories.short_repo import URLRepository
 
@@ -7,15 +8,17 @@ from src.repositories.short_repo import URLRepository
 class ShortenerService:
     """Service for URL Shortener."""
 
-    def __init__(self, url_storage: list):
+    def __init__(
+        self,
+        url_repo: URLRepository = Depends(URLRepository),
+    ):
         """
         Service for URL Shortener.
 
         Args:
-            url_storage: memory storage.
+            url_repo (URLRepository): URL Repository.
         """
-        self.url_storage = url_storage
-        self.short_repo = URLRepository()
+        self.short_repo = url_repo
 
     async def get_short(
         self,

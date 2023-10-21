@@ -7,7 +7,7 @@ data:
   HEALTHZ_PREFIX: {{ .Values.config.healthzPrefix | quote }}
   JAEGER_HOST: {{ .Values.config.jaegerHost | quote }}
   SHORT_URL_LENGTH: {{ .Values.config.shortUrlLength | quote }}
-  POSTGRES_HOST: {{ .Values.config.postgresHost | quote }}
+  POSTGRES_HOST: {{ .Release.Name }}-postgresql
   POSTGRES_PORT: {{ .Values.config.postgresPort | quote }}
   POSTGRES_DB_USER: {{ .Values.config.postgresDbUser | quote }}
   POSTGRES_DB_PASS: {{ .Values.config.postgresDbPass | quote }}

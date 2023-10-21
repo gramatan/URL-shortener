@@ -9,7 +9,7 @@ from main_short import app
 class TestApi:
     """Class for testing API."""
 
-    @pytest.fixture(scope='class')
+    @pytest.fixture(scope='session')
     def test_client(self):
         """
         Fixture for creating a client for testing.
@@ -37,7 +37,8 @@ class TestApi:
             long_url: Long url to be shortened.
             expected_status: Expected status.
         """
-        response = test_client.post(url=f'/api/short?long_url={long_url}')
+        client = test_client
+        response = client.post(url=f'/api/short?long_url={long_url}')
         assert response.status_code == expected_status
 
     @pytest.mark.parametrize(
@@ -56,5 +57,6 @@ class TestApi:
             short_url: Short url to be decoded.
             expected_status: Expected status.
         """
-        response = test_client.get(url=f'/api/go?short_url={short_url}')
+        client = test_client
+        response = client.get(url=f'/api/go?short_url={short_url}')
         assert response.status_code == expected_status

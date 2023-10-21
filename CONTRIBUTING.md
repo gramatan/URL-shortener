@@ -67,7 +67,7 @@ docker run -d -p 24501:24501 --name url_shortener gran_url
   - `integration`: Сценарий интеграционных тестов из задания в одном файле + тесты API.
 
   #### БД:
- TBD
+Модель описана в файле [base.py](src%2Fdatabase%2Fbase.py)
 
 ### Общие файлы
 - [alembic](alembic) : Скрипты для миграции.
