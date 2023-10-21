@@ -24,8 +24,6 @@ spec:
           value: {{ .Values.config.postgresDbPass }}
         - name: POSTGRES_DB
           value: {{ .Values.config.postgresDbName }}
-        - name: PGDATA
-          value: "/bitnami/postgresql"
         ports:
         - containerPort: {{ .Values.config.postgresPort | int }}
         volumeMounts:
