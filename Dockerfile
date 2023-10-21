@@ -39,10 +39,9 @@ COPY ./config/ ./config/
 COPY /src/ ./src/
 COPY main_short.py ./
 
-# alembic stuff
-#COPY ./alembic/ ./alembic/
-#COPY alembic.ini ./
-#COPY create_db.py ./
+COPY ./alembic/ ./alembic/
+COPY alembic.ini ./
+COPY create_db.py ./
 
 EXPOSE 24501
 

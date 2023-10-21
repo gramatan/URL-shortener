@@ -23,7 +23,8 @@ version: 0.1.8
 # It is recommended to use it with quotes.
 appVersion: "1.16.8"
 
-dependencies:
-  - name: postgresql
-    version: "14"
-    repository: "https://charts.bitnami.com/bitnami"
+# Don't have enough permissions to create it in cluster, so I commented this out
+#dependencies:
+#  - name: postgresql
+#    version: "14"
+#    repository: "https://charts.bitnami.com/bitnami"

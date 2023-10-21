@@ -99,15 +99,8 @@ config:
   healthzPrefix: "/healthz"
   jaegerHost: "jaeger-agent.monitoring.svc.cluster.local"
   shortUrlLength: "8"
+  postgresHost: "gran-url-postgresql"
   postgresPort: "5432"
   postgresDbUser: "gran_url"
   postgresDbPass: "gran_url_pass"
   postgresDbName: "gran_url_db"
-
-postgresql:
-  enabled: true
-  postgresqlUsername: gran_url
-  postgresqlPassword: gran_url_pass
-  postgresqlDatabase: gran_url_db
-  service:
-    port: 5432
