@@ -18,6 +18,16 @@ spec:
       labels:
         app: {{ .Values.config.appName | quote }}
     spec:
+      initContainers:
+        - name: init-alembic
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          command:
+            - /bin/sh
+            - -c
+            - sleep 30 && alembic upgrade head
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.config.appName | quote }}
       containers:
         - name: {{ .Values.config.appName | quote }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}

@@ -1,3 +1,9 @@
+## [0.1.9] - 23.10.2023
+### Added
+- Added init container for service deployment template with alembic migrations.
+### Modified
+-
+
 ## [0.1.8] - 20.10.2023
 ### Added
 - Now we work with postgres.
