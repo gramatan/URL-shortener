@@ -37,13 +37,13 @@ spec:
             httpGet:
               path: /healthz/up
               port: {{ .Values.config.appPort }}
-            initialDelaySeconds: 20
+            initialDelaySeconds: 120
             periodSeconds: 5
           readinessProbe:
             httpGet:
               path: /healthz/ready
               port: {{ .Values.config.appPort }}
-            initialDelaySeconds: 30
+            initialDelaySeconds: 120
             periodSeconds: 10
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
